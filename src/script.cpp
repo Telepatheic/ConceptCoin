@@ -1863,6 +1863,20 @@ bool CScript::IsPayToScriptHash() const
             this->at(22) == OP_EQUAL);
 }
 
+/**
+ * An extra-fast test for whether a script is a payToPubKeyHash
+ * type script
+ */
+bool CScript::IsPayToPubKeyHash() const
+{
+    return (this->size() == 25 &&
+            this->at(0) == OP_DUP &&
+            this->at(1) == OP_HASH160 &&
+            this->at(2) == 0x14 &&
+            this->at(23) == OP_EQUALVERIFY &&
+            this->at(24) == OP_CHECKSIG);
+}
+
 bool CScript::IsPushOnly() const
 {
     const_iterator pc = begin();
